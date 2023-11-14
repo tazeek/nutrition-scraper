@@ -18,3 +18,4 @@ size = servings_size.replace(/[^\d.]/g,'')
 // Third div element: nutrition table
 // First value: Quantity per serving
 // Second value: Quantity per 100g/100mL
+nutrition_rows = nutrition_div_elements[2].getElementsByClassName('nutrition-row');
