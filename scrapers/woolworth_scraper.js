@@ -27,8 +27,11 @@ for (let i = 1; i < nutrition_rows.length; i++) {
     nutrition_row = nutrition_rows[i].getElementsByClassName('nutrition-column');
 
     // Extract: Metric/Nutrient, Serving (regular), Serinvg (per 100g/100mL)
-    metric = nutrition_row[0].innerText;
+    information = nutrition_row[0].innerText;
+    information = information.replace(/[^a-z ]/gi, '').trim();
+
     serving_quantity = nutrition_row[1].innerText;
     serving_per_100 = nutrition_row[2].innerText;
-    
-  }
+
+    console.log(`${information} for ${serving_quantity} and ${serving_per_100}`)
+}
