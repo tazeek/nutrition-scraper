@@ -12,6 +12,9 @@ let servings_pack = nutrition_div_elements[0].innerText.split(":")[1].trim()
 // Second div element: serving size
 // Remove all non-alphabets
 let servings_size = nutrition_div_elements[1].innerText.split(":")[1].trim()
-servings_size = servings_size.replace(/[^\d.]/g,'')
+metric = servings_size.replace(/[^a-z]/gi, '');
+size = servings_size.replace(/[^\d.]/g,'')
 
 // Third div element: nutrition table
+// First value: Quantity per serving
+// Second value: Quantity per 100g/100mL
