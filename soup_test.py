@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as soup
 import time
 import re
+import pprint
 
 def get_value_html(serve_str):
     return serve_str.split(':')[1].strip()
@@ -50,19 +51,18 @@ for row in nutrition_row:
     nutrition = get_text(granular_vals[0].strip())
 
     # Get the metric and the respective numbers
-    serving_per_pack = granular_vals[1]
+    serving_quantity = granular_vals[1]
     serving_per_100 = granular_vals[2]
 
-    metric = get_text(serving_per_pack)
+    metric = get_text(serving_quantity)
 
-    serving_per_pack = get_number(serving_per_pack)
+    serving_quantity = get_number(serving_quantity)
     serving_per_100 = get_number(serving_per_100)
 
-    print(f"{nutrition} - {metric}")
-    print(f"- Serving per pack: {serving_per_pack}")
-    print(f"- Serving per 100: {serving_per_100}")
+    product_dict[f'{nutrition} per serving ({metric})'] = serving_quantity
+    product_dict[f'{nutrition} per 100g/100mL ({metric})'] = serving_per_100
 
-    print("\n\n")
+pprint.pprint(product_dict)
 
 time.sleep(10)
 
