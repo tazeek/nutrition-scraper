@@ -10,7 +10,7 @@ function get_div_elements() {
 function get_serving_size(serving_div) {
     let servings_size = serving_div.innerText.split(":")[1].trim()
     let metric = servings_size.replace(/[^a-z]/gi, '');
-    let size = servings_size.replace(/[^\d.]/g,'')
+    let size = servings_size.replace(/[^\d.]/g,'');
     
     return [metric, size]
 }
@@ -35,9 +35,13 @@ function extract_nutrition_values(nutrition_div, nutri_json) {
         // Extract the values
         serving_quantity = nutrition_row[1].innerText;
         serving_per_100 = nutrition_row[2].innerText;
-        
+
         // Get the metric
         metric = serving_quantity.replace(/[^a-z]/gi, '');
+
+        // Get the numbers without the metric
+        serving_quantity = serving_quantity.replace(/[^\d.]/g,'');
+        serving_per_100 = serving_per_100.replace(/[^\d.]/g,'');
 
         nutri_json[`${information} per serving (${metric})`] = serving_quantity
         nutri_json[`${information} per 100g/100mL (${metric})`] = serving_per_100
@@ -66,3 +70,5 @@ json_nutrition[`serving_size (${metric})`] = size
 json_nutrition = extract_nutrition_values(nutrition_div_elements[2], json_nutrition)
 
 console.log(json_nutrition)
+
+return JSON.stringify(json_nutrition);
