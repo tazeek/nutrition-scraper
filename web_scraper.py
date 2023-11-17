@@ -32,8 +32,6 @@ class NutriScraper:
     # Pass in the URL
     def perform_scraping(self, url):
 
-        product_list = []
-
         self._browser.get(url)
 
         # Selenium only waits for the HTML DOM to load.
@@ -50,9 +48,8 @@ class NutriScraper:
             pass
 
         nutrition_info = self._execute_script('scrapers/woolworth_scraper.js')
-        product_list.append(nutrition_info)
 
         # Respect the scraping etiquettes :)
         self._polite_delay()
 
-        return product_list
+        return nutrition_info

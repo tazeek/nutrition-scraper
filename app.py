@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-from web_scraper import perform_scraping
+from web_scraper import NutriScraper
 
 @st.cache_data(ttl="1hr", max_entries=20)
 def _convert_df(df):
@@ -14,7 +14,14 @@ def start_scraping(hyperlink_df):
     hyperlink_df = pd.read_csv(food_list)
     links_list = hyperlink_df['Hyperlink'].values.tolist()
 
-    product_list = perform_scraping(links_list)
+    # Initialize the scraper
+    nutri_scraper = NutriScraper()
+    product_list = []
+
+    for url in links_list:
+
+        new_product = nutri_scraper.perform_scraping(url)
+        product_list.append(new_product)
 
     column_names = list(product_list[0].keys())
 
