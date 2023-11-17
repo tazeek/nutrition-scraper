@@ -1,6 +1,4 @@
 
-// Get the div elements
-// There should always three
 function get_div_elements() {
 
     // Get the nutrition html scope
@@ -9,16 +7,29 @@ function get_div_elements() {
     return nutrition_info_area.getElementsByTagName('div');
 }
 
+function get_serving_size(serving_div) {
+    let servings_size = serving_div.innerText.split(":")[1].trim()
+    let metric = servings_size.replace(/[^a-z]/gi, '');
+    let size = servings_size.replace(/[^\d.]/g,'')
+
+    return metric, size
+}
+
+// This is where we will store the data
+let json_nutrition = {}
+
+// Get the div elements
+// There should always three
 nutrition_div_elements = get_div_elements()
 
 // First div element: servings per package
 let servings_pack = nutrition_div_elements[0].innerText.split(":")[1].trim()
+json_nutrition['servings_per_pack'] = servings_pack
 
 // Second div element: serving size
 // Remove all non-alphabets
-let servings_size = nutrition_div_elements[1].innerText.split(":")[1].trim()
-metric = servings_size.replace(/[^a-z]/gi, '');
-size = servings_size.replace(/[^\d.]/g,'')
+let metric, size = get_serving_size(nutrition_div_elements[1])
+json_nutrition[`serving_size(${metric})`] = size
 
 // Third div element: nutrition table
 // First value: Quantity per serving
@@ -40,3 +51,5 @@ for (let i = 1; i < nutrition_rows.length; i++) {
 
     console.log(`${information} for ${serving_quantity} and ${serving_per_100}`)
 }
+
+console.log(json_nutrition)
