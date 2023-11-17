@@ -36,7 +36,8 @@ def perform_scraping(url_list):
         # Selenium only waits for the HTML DOM to load.
         # We are scraping dynamically loaded content so we have to 
         # explicitly make Selenium wait until this is loaded
-        # Wait until the presence of a HTML element with the class 'paging-next' is detected
+        # Wait until the presence of a HTML element with the class 
+        # 'ar-product-details-nutrition-table' is detected (Nutrition Table)
         try:
             timeout = 10
             WebDriverWait(browser, timeout).until(EC.presence_of_element_located(
@@ -48,9 +49,8 @@ def perform_scraping(url_list):
         nutrition_info = execute_script(browser, 'scrapers/woolworth_scraper.js')
         product_list.append(nutrition_info)
 
+        # Respect the scraping etiquettes :)
         polite_delay()
-
-    #pprint(product_list)
 
     return product_list
 
@@ -66,5 +66,3 @@ column_names = list(product_list[0].keys())
 
 product_df = pd.DataFrame(product_list, columns=column_names)
 product_df.to_csv(f'products.csv', sep=",", index=False)
-
-print(column_names)
