@@ -22,15 +22,16 @@ def perform_scraping(url_list):
 
     # We don't want to open the browser
     browser = webdriver.Chrome()
+    product_list = []
 
     for url in url_list:
         browser.get(url)
         time.sleep(10)
-        test = execute_script(browser, 'scrapers/woolworth_scraper.js')
-        polite_delay()
 
-        pprint(test)
-        print("\n\n")
+        nutrition_info = execute_script(browser, 'scrapers/woolworth_scraper.js')
+        product_list.append(nutrition_info)
+        
+        polite_delay()
 
     return None
 
