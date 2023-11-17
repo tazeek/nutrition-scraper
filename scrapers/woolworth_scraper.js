@@ -69,6 +69,4 @@ json_nutrition[`Serving size (${metric})`] = size
 // Get the nutritional values
 json_nutrition = extract_nutrition_values(nutrition_div_elements[2], json_nutrition)
 
-console.log(json_nutrition)
-
-//return JSON.stringify(json_nutrition);
+return JSON.stringify(json_nutrition);
