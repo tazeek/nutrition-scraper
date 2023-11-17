@@ -46,18 +46,22 @@ for row in nutrition_row:
     granular_vals = row.find_all("li", {"class": 'wow-col-4 nutrition-column'})
     granular_vals = [val.get_text().strip() for val in granular_vals]
 
+    # Get the nutrition label
     nutrition = get_text(granular_vals[0].strip())
-    print(nutrition)
 
+    # Get the metric and the respective numbers
     serving_per_pack = granular_vals[1]
     serving_per_100 = granular_vals[2]
 
     metric = get_text(serving_per_pack)
-    print(metric)
 
+    serving_per_pack = get_number(serving_per_pack)
+    serving_per_100 = get_number(serving_per_100)
 
+    print(f"{nutrition} - {metric}")
+    print(f"- Serving per pack: {serving_per_pack}")
+    print(f"- Serving per 100: {serving_per_100}")
 
-    #print(granular_vals)
     print("\n\n")
 
 time.sleep(10)
