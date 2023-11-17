@@ -1,0 +1,6 @@
+name: nutri-scraper
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - selenium == 4.15.2
