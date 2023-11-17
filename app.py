@@ -1,4 +1,11 @@
 import streamlit as st
+import pandas as pd
+
+@st.cache_data(ttl=60)
+def start_scraping(hyperlink_df):
+    full_list = pd.read_csv(food_list)
+    nutrition_list = start_scraping(full_list)
+    ...
 
 st.title('Welcome to NutriScraper.')
 st.header("File upload section")
@@ -20,4 +27,4 @@ food_list = st.file_uploader(
 
 # Check if uploaded
 if food_list:
-    print("Let's get started!")
+    nutrition_list = start_scraping(food_list)
