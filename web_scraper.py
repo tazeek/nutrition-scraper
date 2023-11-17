@@ -40,7 +40,7 @@ class NutriScraper:
         # Wait until the presence of a HTML element with the class 
         # 'ar-product-details-nutrition-table' is detected (Nutrition Table)
         try:
-            timeout = 10
+            timeout = 20
             WebDriverWait(self._browser, timeout).until(EC.presence_of_element_located(
                 (By.CLASS_NAME, 'ar-product-details-nutrition-table')
             ))

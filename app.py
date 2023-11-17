@@ -14,20 +14,27 @@ def start_scraping(hyperlink_df):
     hyperlink_df = pd.read_csv(food_list)
     links_list = hyperlink_df['Hyperlink'].values.tolist()
 
-    # Initialize the scraper
+    # Initialization
+    my_bar = st.progress(0, text="Preparing to scrape..")
+    total_links = len(links_list)
+
     nutri_scraper = NutriScraper()
     product_list = []
 
-    for url in links_list:
+    for index, url in enumerate(links_list):
 
+        percentage = ((index + 1)/total_links) * 100
         new_product = nutri_scraper.perform_scraping(url)
         product_list.append(new_product)
 
-    column_names = list(product_list[0].keys())
+        my_bar.progress(
+            percentage, 
+            text=f"{index + 1}/{total_links} scraped"
+        )
 
-    product_df = pd.DataFrame(product_list, columns=column_names)
+    column_names = list(product_list[0].keys())
     
-    return product_df
+    return pd.DataFrame(product_list, columns=column_names)
 
 st.title('Welcome to NutriScraper.')
 st.header("File upload section")
