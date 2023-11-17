@@ -1,6 +1,9 @@
 import json
+import time
+import random
 
-# A function to execute script (JS)
+from selenium import webdriver
+
 def execute_script(browser, js_file):
     f = open(js_file, 'r')
     json_string = browser.execute_script(f.read())
@@ -8,8 +11,10 @@ def execute_script(browser, js_file):
 
     return json.loads(json_string)
     
-
-# A function to sleep (scraping ethics)
+def polite_delay():
+    delay_time = random.uniform(1,5)
+    time.sleep(delay_time)
+    return None
 
 # Pass in the URL
 
