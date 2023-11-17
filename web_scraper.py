@@ -3,6 +3,11 @@ import time
 import random
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+
 from pprint import pprint
 
 def execute_script(browser, js_file):
@@ -26,12 +31,21 @@ def perform_scraping(url_list):
 
     for url in url_list:
         browser.get(url)
-        time.sleep(10)
+
+        try:
+            timeout = 10
+            WebDriverWait(browser, timeout).until(EC.presence_of_element_located(
+                (By.CLASS_NAME, 'ar-product-details-nutrition-table')
+            ))
+        except TimeoutException:
+             pass
 
         nutrition_info = execute_script(browser, 'scrapers/woolworth_scraper.js')
         product_list.append(nutrition_info)
-        
+
         polite_delay()
+
+    pprint(product_list)
 
     return None
 
