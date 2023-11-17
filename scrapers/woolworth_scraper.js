@@ -1,10 +1,15 @@
 
-// Get the nutrition html scope
-let nutrition_info_area = document.getElementsByClassName('ar-product-details-nutrition-table')[0];
-
 // Get the div elements
 // There should always three
-let nutrition_div_elements = nutrition_info_area.getElementsByTagName('div');
+function get_div_elements() {
+
+    // Get the nutrition html scope
+    class_name = 'ar-product-details-nutrition-table'
+    let nutrition_info_area = document.getElementsByClassName(class_name)[0];
+    return nutrition_info_area.getElementsByTagName('div');
+}
+
+nutrition_div_elements = get_div_elements()
 
 // First div element: servings per package
 let servings_pack = nutrition_div_elements[0].innerText.split(":")[1].trim()
