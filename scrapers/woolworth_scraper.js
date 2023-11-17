@@ -59,16 +59,16 @@ nutrition_div_elements = get_div_elements()
 
 // First div element: servings per package
 let servings_pack = nutrition_div_elements[0].innerText.split(":")[1].trim();
-json_nutrition['servings_per_pack'] = servings_pack;
+json_nutrition['Servings per pack'] = servings_pack;
 
 // Second div element: serving size
 // Remove all non-alphabets
 let [metric, size] = get_serving_size(nutrition_div_elements[1])
-json_nutrition[`serving_size (${metric})`] = size
+json_nutrition[`Serving size (${metric})`] = size
 
 // Get the nutritional values
 json_nutrition = extract_nutrition_values(nutrition_div_elements[2], json_nutrition)
 
 console.log(json_nutrition)
 
-return JSON.stringify(json_nutrition);
+//return JSON.stringify(json_nutrition);
