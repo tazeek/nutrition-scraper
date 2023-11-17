@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.service import Service
@@ -15,10 +16,14 @@ class NutriScraper:
 
     def __init__(self):
 
+        options = Options()
+        options.add_argument("--headless")
+
         self._browser = webdriver.Chrome(
             service=Service(
                 executable_path=shutil.which('chromedriver')
-            )
+            ),
+            options=options
         )
 
     def _execute_script(self, js_file):
