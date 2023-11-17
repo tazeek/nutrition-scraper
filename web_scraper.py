@@ -9,27 +9,32 @@ import time
 import random
 import pandas as pd
 
-def execute_script(browser, js_file):
-    f = open(js_file, 'r')
-    json_string = browser.execute_script(f.read())
-    f.close()
+class NutriScraper:
 
-    return json.loads(json_string)
+    def __init__(self):
+        self._browser = webdriver.Chrome()
+
+    def _execute_script(self, js_file):
+
+        json_string = ''
+
+        with open(js_file, 'r') as f:
+            json_string = self._browser.execute_script(f.read())
+
+        return json.loads(json_string)
     
-def polite_delay():
-    delay_time = random.uniform(1,5)
-    time.sleep(delay_time)
-    return None
+    @classmethod
+    def _polite_delay(cls):
+        delay_time = random.uniform(1,5)
+        time.sleep(delay_time)
+        return None
 
-# Pass in the URL
-def perform_scraping(url_list):
+    # Pass in the URL
+    def perform_scraping(self, url):
 
-    # We don't want to open the browser
-    browser = webdriver.Chrome()
-    product_list = []
+        product_list = []
 
-    for url in url_list:
-        browser.get(url)
+        self._browser.get(url)
 
         # Selenium only waits for the HTML DOM to load.
         # We are scraping dynamically loaded content so we have to 
@@ -38,16 +43,16 @@ def perform_scraping(url_list):
         # 'ar-product-details-nutrition-table' is detected (Nutrition Table)
         try:
             timeout = 10
-            WebDriverWait(browser, timeout).until(EC.presence_of_element_located(
+            WebDriverWait(self._browser, timeout).until(EC.presence_of_element_located(
                 (By.CLASS_NAME, 'ar-product-details-nutrition-table')
             ))
         except TimeoutException:
-             pass
+            pass
 
-        nutrition_info = execute_script(browser, 'scrapers/woolworth_scraper.js')
+        nutrition_info = self._execute_script('scrapers/woolworth_scraper.js')
         product_list.append(nutrition_info)
 
         # Respect the scraping etiquettes :)
-        polite_delay()
+        self._polite_delay()
 
-    return product_list
+        return product_list
