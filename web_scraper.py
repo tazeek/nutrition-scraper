@@ -64,23 +64,23 @@ class NutriScraper:
 
         for row in nutrition_row:
 
-            granular_vals = row.find_all("li", {"class": 'wow-col-4 nutrition-column'})
-            granular_vals = [val.get_text().strip() for val in granular_vals]
+            nutrition_vals = row.find_all("li", {"class": 'wow-col-4 nutrition-column'})
+            nutrition_vals = [val.get_text().strip() for val in nutrition_vals]
 
             # Get the nutrition label
-            nutrition = self.get_text(granular_vals[0].strip())
+            nutrition_label = self.get_text(nutrition_vals[0].strip())
 
             # Get the metric and the respective numbers
-            serving_quantity = granular_vals[1]
-            serving_per_100 = granular_vals[2]
+            serving_quantity = nutrition_vals[1]
+            serving_per_100 = nutrition_vals[2]
 
             metric = self.get_text(serving_quantity)
 
             serving_quantity = self.get_number(serving_quantity)
             serving_per_100 = self.get_number(serving_per_100)
 
-            nutrition_dict[f'{nutrition} per serving ({metric})'] = serving_quantity
-            nutrition_dict[f'{nutrition} per 100g/100mL ({metric})'] = serving_per_100
+            nutrition_dict[f'{nutrition_label} per serving ({metric})'] = serving_quantity
+            nutrition_dict[f'{nutrition_label} per 100g/100mL ({metric})'] = serving_per_100
 
         # Respect the scraping etiquettes :)
         self._polite_delay()
