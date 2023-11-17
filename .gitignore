@@ -1,3 +1,5 @@
 # For CSV files
-
 *.csv
+
+# For pycache
+__pycache__/
