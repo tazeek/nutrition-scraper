@@ -1,12 +1,13 @@
-import json
-import time
-import random
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+
+import json
+import time
+import random
+import pandas as pd
 
 from pprint import pprint
 
@@ -49,9 +50,9 @@ def perform_scraping(url_list):
 
         polite_delay()
 
-    pprint(product_list)
+    #pprint(product_list)
 
-    return None
+    return product_list
 
 # Start here
 url_list = [
@@ -59,4 +60,7 @@ url_list = [
     "https://www.woolworths.com.au/shop/productdetails/172660/woolworths-cashews-roasted-salted"
 ]
 
-perform_scraping(url_list)
+product_list = perform_scraping(url_list)
+
+column_names = list(product_list[0].keys())
+print(column_names)
