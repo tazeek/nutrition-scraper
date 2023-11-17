@@ -4,11 +4,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 
 import json
 import time
 import random
+import shutil
 import pandas as pd
 
 class NutriScraper:
@@ -17,7 +17,7 @@ class NutriScraper:
 
         self._browser = webdriver.Chrome(
             service=Service(
-                ChromeDriverManager().install()
+                executable_path=shutil.which('chromedriver')
             )
         )
 

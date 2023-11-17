@@ -38,7 +38,7 @@ def start_scraping(hyperlink_df):
 
 # Page configurations
 st.set_page_config(
-    page_title="NutriScraper - Get products scraped!",
+    page_title="NutriScraper - Get products scraped",
     page_icon="🛒",
     layout="wide"
 )
