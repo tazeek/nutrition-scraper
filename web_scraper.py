@@ -63,4 +63,8 @@ url_list = [
 product_list = perform_scraping(url_list)
 
 column_names = list(product_list[0].keys())
+
+product_df = pd.DataFrame(product_list, columns=column_names)
+product_df.to_csv(f'products.csv', sep=",", index=False)
+
 print(column_names)
