@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 import json
 import time
@@ -12,7 +14,12 @@ import pandas as pd
 class NutriScraper:
 
     def __init__(self):
-        self._browser = webdriver.Chrome()
+
+        self._browser = webdriver.Chrome(
+            service=Service(
+                ChromeDriverManager().install()
+            )
+        )
 
     def _execute_script(self, js_file):
 
