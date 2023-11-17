@@ -19,30 +19,39 @@ response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
 page_soup = soup(response.text, 'html.parser')
 
 # Get the product name
+product_dict = {}
+
 product_name = page_soup.find_all("h1", {"class": "shelfProductTile-title heading4"})
-product_name = product_name[0].get_text()
+product_dict['Product Name'] = product_name[0].get_text()
 
 # Get the serving pack
 servings_pack = page_soup.find("div", {"*ngif": 'productServingsPerPack'})
-servings_pack = get_value_html(servings_pack.get_text())
-print(f'Serving pack : {servings_pack}')
+servings_pack_value = get_value_html(servings_pack.get_text())
+product_dict['Servings per pack'] = servings_pack_value
 
-# Get the serving size
+# Get the serving size, followed by the metrics
 serving_size = page_soup.find("div", {"*ngif": 'productServingSize'})
 serving_size = get_value_html(serving_size.get_text())
 
-metric = get_metric(serving_size) 
-value = get_number(serving_size)
-print(f'Serving size {metric}: {value}')
+serving_size_metric = get_metric(serving_size) 
+serving_size_value = get_number(serving_size)
+product_dict[f'Serving size {serving_size_metric}'] = serving_size_value
 
-#nutrition_row = page_soup.find_all("ul", {"class": 'wow-row nutrition-row'})
+product_dict['Pack Size'] = float(serving_size_value) * float(servings_pack_value)
 
-#for row in nutrition_row:
+nutrition_row = page_soup.find_all("ul", {"class": 'wow-row nutrition-row'})
 
-#    granular_vals = row.find_all("li", {"class": 'wow-col-4 nutrition-column'})
-#    granular_vals = [val.get_text().strip() for val in granular_vals]
-#    print(granular_vals)
-#    print("\n\n")
+for row in nutrition_row:
+
+    granular_vals = row.find_all("li", {"class": 'wow-col-4 nutrition-column'})
+    granular_vals = [val.get_text().strip() for val in granular_vals]
+
+    nutrition = granular_vals[0]
+    serving_per_pack = granular_vals[1]
+    serving_per_100 = granular_vals[2]
+
+    print(granular_vals)
+    print("\n\n")
 
 time.sleep(10)
 
