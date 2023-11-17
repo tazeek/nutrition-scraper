@@ -7,7 +7,7 @@ from web_scraper import NutriScraper
 def _convert_df(df):
     return df.to_csv(sep=",", index=False).encode('utf-8')
 
-@st.cache_data(ttl=60)
+@st.cache_data(ttl=60, show_spinner=False)
 def start_scraping(hyperlink_df):
 
     # Get the list of URLs
@@ -35,6 +35,13 @@ def start_scraping(hyperlink_df):
     column_names = list(product_list[0].keys())
     
     return pd.DataFrame(product_list, columns=column_names)
+
+# Page configurations
+st.set_page_config(
+    page_title="NutriScraper - Get products scraped!",
+    page_icon="🛒",
+    layout="wide"
+)
 
 st.title('Welcome to NutriScraper.')
 st.header("File upload section")
