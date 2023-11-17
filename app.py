@@ -1,11 +1,22 @@
 import streamlit as st
 import pandas as pd
 
+from web_scraper import perform_scraping
+
 @st.cache_data(ttl=60)
 def start_scraping(hyperlink_df):
-    full_list = pd.read_csv(food_list)
-    nutrition_list = start_scraping(full_list)
-    ...
+
+    # Get the list of URLs
+    hyperlink_df = pd.read_csv(food_list)
+    links_list = hyperlink_df['Hyperlink'].values.tolist()
+
+    product_list = perform_scraping(links_list)
+
+    column_names = list(product_list[0].keys())
+
+    product_df = pd.DataFrame(product_list, columns=column_names)
+    
+    return product_df
 
 st.title('Welcome to NutriScraper.')
 st.header("File upload section")

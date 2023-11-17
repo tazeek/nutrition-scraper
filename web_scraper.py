@@ -53,17 +53,3 @@ def perform_scraping(url_list):
         polite_delay()
 
     return product_list
-
-# Start here
-url_list = [
-    "https://www.woolworths.com.au/shop/productdetails/84628/arnott-s-tim-tam-original-family-pack-chocolate-biscuits",
-    "https://www.woolworths.com.au/shop/productdetails/172660/woolworths-cashews-roasted-salted"
-]
-
-product_list = perform_scraping(url_list)
-
-column_names = list(product_list[0].keys())
-
-product_df = pd.DataFrame(product_list, columns=column_names)
-
-product_df.to_csv(f'products.csv', sep=",", index=False)
