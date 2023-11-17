@@ -1,4 +1,10 @@
 
+function get_product_name() {
+    product_name = document.getElementsByClassName('shelfProductTile-title heading4');
+
+    return product_name[0].innerText;
+}
+
 function get_div_elements() {
 
     // Get the nutrition html scope
@@ -52,6 +58,7 @@ function extract_nutrition_values(nutrition_div, nutri_json) {
 
 // This is where we will store the data
 let json_nutrition = {}
+json_nutrition['Product Name'] = get_product_name()
 
 // Get the div elements
 // There should always three
@@ -65,6 +72,9 @@ json_nutrition['Servings per pack'] = servings_pack;
 // Remove all non-alphabets
 let [metric, size] = get_serving_size(nutrition_div_elements[1])
 json_nutrition[`Serving size (${metric})`] = size
+
+// For the pack size
+json_nutrition[`Pack Size`] = size * servings_pack
 
 // Get the nutritional values
 json_nutrition = extract_nutrition_values(nutrition_div_elements[2], json_nutrition)
