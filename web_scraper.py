@@ -3,6 +3,7 @@ import time
 import random
 
 from selenium import webdriver
+from pprint import pprint
 
 def execute_script(browser, js_file):
     f = open(js_file, 'r')
@@ -17,5 +18,26 @@ def polite_delay():
     return None
 
 # Pass in the URL
+def perform_scraping(url_list):
+
+    # We don't want to open the browser
+    browser = webdriver.Chrome()
+
+    for url in url_list:
+        browser.get(url)
+        time.sleep(10)
+        test = execute_script(browser, 'scrapers/woolworth_scraper.js')
+        polite_delay()
+
+        pprint(test)
+        print("\n\n")
+
+    return None
 
 # Start here
+url_list = [
+    "https://www.woolworths.com.au/shop/productdetails/84628/arnott-s-tim-tam-original-family-pack-chocolate-biscuits",
+    "https://www.woolworths.com.au/shop/productdetails/172660/woolworths-cashews-roasted-salted"
+]
+
+perform_scraping(url_list)
