@@ -23,7 +23,7 @@ def start_scraping(hyperlink_df):
 
     for index, url in enumerate(links_list):
 
-        percentage = ((index + 1)/total_links) * 100
+        percentage = int(((index + 1)/total_links) * 100)
         new_product = nutri_scraper.perform_scraping(url)
         product_list.append(new_product)
 
