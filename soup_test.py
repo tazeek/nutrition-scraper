@@ -6,8 +6,8 @@ import re
 def get_value_html(serve_str):
     return serve_str.split(':')[1].strip()
 
-def get_metric(nutri_val):
-    return re.sub('[^a-zA-Z]', '', nutri_val)
+def get_text(nutri_val):
+    return re.sub('[^a-zA-Z ]', '', nutri_val).strip()
 
 def get_number(nutri_val):
     return re.findall("\d+\.\d+", nutri_val)[0]
@@ -33,7 +33,7 @@ product_dict['Servings per pack'] = servings_pack_value
 serving_size = page_soup.find("div", {"*ngif": 'productServingSize'})
 serving_size = get_value_html(serving_size.get_text())
 
-serving_size_metric = get_metric(serving_size) 
+serving_size_metric = get_text(serving_size) 
 serving_size_value = get_number(serving_size)
 product_dict[f'Serving size {serving_size_metric}'] = serving_size_value
 
@@ -46,12 +46,15 @@ for row in nutrition_row:
     granular_vals = row.find_all("li", {"class": 'wow-col-4 nutrition-column'})
     granular_vals = [val.get_text().strip() for val in granular_vals]
 
-    nutrition = granular_vals[0]
+    nutrition = get_text(granular_vals[0].strip())
+    print(nutrition)
     serving_per_pack = granular_vals[1]
     serving_per_100 = granular_vals[2]
 
-    print(granular_vals)
-    print("\n\n")
+
+
+    #print(granular_vals)
+    #print("\n\n")
 
 time.sleep(10)
 
