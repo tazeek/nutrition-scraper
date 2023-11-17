@@ -1,1 +1,4 @@
 selenium == 4.15.2
+streamlit
+seleniumbase
+webdriver-manager
