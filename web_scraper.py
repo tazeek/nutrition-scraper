@@ -32,6 +32,10 @@ def perform_scraping(url_list):
     for url in url_list:
         browser.get(url)
 
+        # Selenium only waits for the HTML DOM to load.
+        # We are scraping dynamically loaded content so we have to 
+        # explicitly make Selenium wait until this is loaded
+        # Wait until the presence of a HTML element with the class 'paging-next' is detected
         try:
             timeout = 10
             WebDriverWait(browser, timeout).until(EC.presence_of_element_located(
