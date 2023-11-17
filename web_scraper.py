@@ -9,8 +9,6 @@ import time
 import random
 import pandas as pd
 
-from pprint import pprint
-
 def execute_script(browser, js_file):
     f = open(js_file, 'r')
     json_string = browser.execute_script(f.read())

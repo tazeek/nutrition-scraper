@@ -55,4 +55,4 @@ if food_list:
 
     # Show the output
     st.write(new_products_df)
-    st.ballons()
+    st.balloons()
