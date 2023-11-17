@@ -64,7 +64,17 @@ food_list = st.file_uploader(
 # Check if uploaded and then start scraping
 if food_list:
 
-    new_products_df = start_scraping(food_list)
+    new_products_df = None
+    
+    try:
+        new_products_df = start_scraping(food_list)
+    except Exception as e:
+        st.error(
+            "An error has occurred. \n \
+            Please refresh and try again.",
+            icon="🚨"
+        )
+        st.stop()
 
     # Attach to download button
     st.download_button(
