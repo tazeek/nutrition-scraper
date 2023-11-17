@@ -3,6 +3,10 @@ import pandas as pd
 
 from web_scraper import perform_scraping
 
+@st.cache_data(ttl="1hr", max_entries=20)
+def _convert_df(df):
+    return df.to_csv(sep=",", index=False).encode('utf-8')
+
 @st.cache_data(ttl=60)
 def start_scraping(hyperlink_df):
 
@@ -36,6 +40,19 @@ food_list = st.file_uploader(
     type="csv"
 )
 
-# Check if uploaded
+# Check if uploaded and then start scraping
 if food_list:
-    nutrition_list = start_scraping(food_list)
+
+    new_products_df = start_scraping(food_list)
+
+    # Attach to download button
+    st.download_button(
+        label="Download the extracted file.",
+        data = _convert_df(new_products_df),
+        file_name = 'new_food_items.csv',
+        mime = 'text/csv'
+    )
+
+    # Show the output
+    st.write(new_products_df)
+    st.ballons()
