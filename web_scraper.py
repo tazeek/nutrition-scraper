@@ -24,7 +24,7 @@ class NutriScraper:
 
     @classmethod
     def get_number(cls, nutri_val):
-        return re.findall("\d+\.\d+", nutri_val)[0]
+        return float(re.search(r'\d+(\.\d+)?', nutri_val).group())
     
     @classmethod
     def _polite_delay(cls):
