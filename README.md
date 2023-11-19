@@ -6,13 +6,13 @@ Website link: https://nutri-scraper.streamlit.app/
 ## Important notes
 
 Websites for scraping:
-- Woolworth Products (https://www.woolworths.com.au/)
+- Woolworth Products (https://www.woolworths.com.au/) <br>
 -- Example of product: https://www.woolworths.com.au/shop/productdetails/84628/arnott-s-tim-tam-original-family-pack-chocolate-biscuits
 
 
 ## How it works
 
-1. Create a CSV file (example: https://github.com/tazeek/nutrition-scraper/blob/master/food_list.csv)
+1. Create a CSV file (example: https://github.com/tazeek/nutrition-scraper/blob/master/food_list.csv) <br>
 -- NOTE: Column must be labeled as **Hyperlink**
 
 2. Pass in the URL of the product to scrap (Example shown in the previous section)
