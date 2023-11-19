@@ -49,7 +49,7 @@ st.header('Important Notes')
 st.markdown(
 """
 Current websites supported:
-- Woolworth
+- Woolworths
 
 Please read the following on how to run: https://github.com/tazeek/nutrition-scraper#how-it-works
 """
