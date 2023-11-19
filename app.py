@@ -44,6 +44,18 @@ st.set_page_config(
 )
 
 st.title('Welcome to NutriScraper.')
+
+st.header('Important Notes')
+st.markdown(
+"""
+Current websites supported:
+- Woolworth
+
+Please read the following on how to run: https://github.com/tazeek/nutrition-scraper#how-it-works
+"""
+)
+
+
 st.header("File upload section")
 
 # Just in case
