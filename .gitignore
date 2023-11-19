@@ -1,5 +1,5 @@
 # For CSV files
-*.csv
+products.csv
 
 # For pycache
 __pycache__/
