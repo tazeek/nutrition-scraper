@@ -33,7 +33,7 @@ class NutriScraper:
     
     @classmethod
     def _polite_delay(cls):
-        time.sleep(15)
+        time.sleep(20)
         return None
 
     # Pass in the URL
