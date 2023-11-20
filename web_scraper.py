@@ -77,8 +77,8 @@ class NutriScraper:
             nutrition_label = self.get_text(nutrition_vals[0].strip())
 
             # Get the metric and the respective numbers
-            serving_quantity = nutrition_vals[1]
-            serving_per_100 = nutrition_vals[2]
+            serving_quantity = self.clean_prefix_values(nutrition_vals[1])
+            serving_per_100 = self.clean_prefix_values(nutrition_vals[2])
 
             metric = self.get_text(serving_quantity)
 
