@@ -2,8 +2,8 @@ from bs4 import BeautifulSoup as soup
 
 import requests
 import time
-import random
 import re
+import json
 import pandas as pd
 
 class NutriScraper:
@@ -32,8 +32,8 @@ class NutriScraper:
             if nutri_val else 0
     
     @classmethod
-    def _polite_delay(cls):
-        time.sleep(20)
+    def _polite_delay(cls, amount):
+        time.sleep(amount)
         return None
 
     # Pass in the URL
@@ -54,6 +54,11 @@ class NutriScraper:
         servings_pack = page_soup.find("div", {"*ngif": 'productServingsPerPack'})
         servings_pack_value = self.get_value_html(servings_pack.get_text()) if servings_pack else 1
         nutrition_dict['Servings per pack'] = servings_pack_value
+
+        # Get the money
+        dollar_amount = page_soup.find("span", {"class": "price-dollars"})
+        cents_amount = page_soup.find("span", {"class": "price-cents"})
+        nutrition_dict['Price'] = f"{dollar_amount.get_text()}.{cents_amount.get_text()}"
 
         # Get the serving size, followed by the metrics
         serving_size = page_soup.find("div", {"*ngif": 'productServingSize'})
@@ -87,7 +92,19 @@ class NutriScraper:
             nutrition_dict[f'{nutrition_label} per serving ({metric})'] = serving_quantity
             nutrition_dict[f'{nutrition_label} per 100g/100mL ({metric})'] = serving_per_100
 
+        self._polite_delay(25)
+
+        # Call the API too
+        # The ID is the second-last before the product name
+        product_id = url.split("/")[-2]
+        new_url = f'https://www.woolworths.com.au/api/v3/ui/schemaorg/product/{product_id}'
+        response = requests.get(new_url, headers=self._header)
+        product_info_dict = json.loads(response.content)
+
+        # Get the price
+        nutrition_dict['Price'] = product_info_dict["offers"]["price"]
+
         # Respect the scraping etiquettes :)
-        self._polite_delay()
+        self._polite_delay(10)
 
         return nutrition_dict

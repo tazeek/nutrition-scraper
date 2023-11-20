@@ -46,8 +46,6 @@ def start_scraping(hyperlink_df):
             text=f"{index + 1}/{total_links} scraped"
         )
 
-        print("\n\n\n")
-
     column_names = list(product_list[0].keys())
 
     scraped_df = pd.DataFrame(product_list, columns=column_names)
