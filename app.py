@@ -62,9 +62,9 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title('Welcome to NutriScraper.')
+st.title('Welcome to NutriScraper 🛒')
 
-st.header('Important Notes')
+st.header('Important Notes!')
 st.markdown(
 """
 Current websites supported:
@@ -108,7 +108,7 @@ if food_list:
 
     # Attach to download button
     st.download_button(
-        label="Download the extracted file.",
+        label="Download the scraped file",
         data = _convert_df(new_products_df),
         file_name = 'new_food_items.csv',
         mime = 'text/csv'
