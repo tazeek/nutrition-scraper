@@ -23,6 +23,8 @@ def start_scraping(hyperlink_df):
 
     for index, url in enumerate(links_list):
 
+        print(f"URL: {url}")
+
         percentage = int(((index + 1)/total_links) * 100)
         new_product = nutri_scraper.perform_scraping(url)
         product_list.append(new_product)
@@ -31,6 +33,8 @@ def start_scraping(hyperlink_df):
             percentage, 
             text=f"{index + 1}/{total_links} scraped"
         )
+
+        print("\n\n\n")
 
     column_names = list(product_list[0].keys())
     
@@ -78,15 +82,7 @@ if food_list:
 
     new_products_df = None
     
-    try:
-        new_products_df = start_scraping(food_list)
-    except Exception as e:
-        st.error(
-            "An error has occurred. \n \
-            Please refresh and try again.",
-            icon="🚨"
-        )
-        st.stop()
+    new_products_df = start_scraping(food_list)
 
     # Attach to download button
     st.download_button(

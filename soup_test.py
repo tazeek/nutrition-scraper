@@ -10,8 +10,12 @@ def get_value_html(serve_str):
 def get_text(nutri_val):
     return re.sub('[^a-zA-Z ]', '', nutri_val).strip()
 
+def clean_prefix_values(nutri_val):
+    return re.sub(r'^\D*', '', nutri_val)
+
 def get_number(nutri_val):
-    return re.findall("\d+\.\d+", nutri_val)[0]
+    return re.search(r'\d+(\.\d+)?', nutri_val).group() \
+        if nutri_val else 0
 
 url = 'https://www.woolworths.com.au/shop/productdetails/84628/arnott-s-tim-tam-original-family-pack-chocolate-biscuits'
 
@@ -27,7 +31,10 @@ product_dict['Product Name'] = product_name[0].get_text()
 
 # Get the serving pack
 servings_pack = page_soup.find("div", {"*ngif": 'productServingsPerPack'})
-servings_pack_value = get_value_html(servings_pack.get_text())
+
+# Sometimes they ignore it...
+servings_pack_value = get_value_html(servings_pack.get_text()) if servings_pack else 1
+
 product_dict['Servings per pack'] = servings_pack_value
 
 # Get the serving size, followed by the metrics
@@ -51,11 +58,18 @@ for row in nutrition_row:
     nutrition = get_text(granular_vals[0].strip())
 
     # Get the metric and the respective numbers
-    serving_quantity = granular_vals[1]
-    serving_per_100 = granular_vals[2]
+    # Clean the prefix values (as some have it)
+    serving_quantity = clean_prefix_values(granular_vals[1])
+    serving_per_100 = clean_prefix_values(granular_vals[2])
+
+    print(serving_quantity)
+    print(serving_per_100)
 
     metric = get_text(serving_quantity)
 
+    print(metric)
+    print("\n\n")
+    
     serving_quantity = get_number(serving_quantity)
     serving_per_100 = get_number(serving_per_100)
 

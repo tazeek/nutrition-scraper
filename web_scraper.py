@@ -21,10 +21,15 @@ class NutriScraper:
     @classmethod
     def get_text(cls, nutri_val):
         return re.sub('[^a-zA-Z ]', '', nutri_val).strip()
+    
+    @classmethod
+    def clean_prefix_values(cls, nutri_val):
+        return re.sub(r'^\D*', '', nutri_val)  
 
     @classmethod
     def get_number(cls, nutri_val):
-        return re.search(r'\d+(\.\d+)?', nutri_val).group()
+        return re.search(r'\d+(\.\d+)?', nutri_val).group() \
+            if nutri_val else 0
     
     @classmethod
     def _polite_delay(cls):
@@ -46,8 +51,9 @@ class NutriScraper:
         nutrition_dict['Product Name'] = product_name[0].get_text()
 
         # Get the serving pack
+        # NOTE: Some products leave it out. So, give it a value of 1
         servings_pack = page_soup.find("div", {"*ngif": 'productServingsPerPack'})
-        servings_pack_value = self.get_value_html(servings_pack.get_text())
+        servings_pack_value = self.get_value_html(servings_pack.get_text()) if servings_pack else 1
         nutrition_dict['Servings per pack'] = servings_pack_value
 
         # Get the serving size, followed by the metrics
