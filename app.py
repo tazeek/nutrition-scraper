@@ -3,6 +3,12 @@ import pandas as pd
 
 from web_scraper import NutriScraper
 
+@st.cache_data(ttl=60)
+def _generate_message_failed(failed_list):
+
+    message = [f'- Failed for {url}' for url in failed_list]
+    return "\n".join(message)
+
 @st.cache_data(ttl="1hr", max_entries=20)
 def _convert_df(df):
     return df.to_csv(sep=",", index=False).encode('utf-8')
@@ -20,13 +26,21 @@ def start_scraping(hyperlink_df):
 
     nutri_scraper = NutriScraper()
     product_list = []
+    failed_scraps = []
 
     for index, url in enumerate(links_list):
 
         print(f"URL: {url}")
 
         percentage = int(((index + 1)/total_links) * 100)
-        new_product = nutri_scraper.perform_scraping(url)
+        new_product = None
+
+        try:
+            new_product = nutri_scraper.perform_scraping(url)
+        except Exception as e:
+            failed_scraps.append(url)
+            continue
+
         product_list.append(new_product)
 
         my_bar.progress(
@@ -41,7 +55,7 @@ def start_scraping(hyperlink_df):
     scraped_df = pd.DataFrame(product_list, columns=column_names)
     scraped_df.fillna(0, inplace=True)
     
-    return scraped_df
+    return scraped_df, failed_scraps
 
 # Page configurations
 st.set_page_config(
@@ -85,7 +99,7 @@ if food_list:
 
     new_products_df = None
     
-    new_products_df = start_scraping(food_list)
+    new_products_df, failed_scraps = start_scraping(food_list)
 
     # Attach to download button
     st.download_button(
