@@ -30,8 +30,6 @@ def start_scraping(hyperlink_df):
 
     for index, url in enumerate(links_list):
 
-        print(f"URL: {url}")
-
         percentage = int(((index + 1)/total_links) * 100)
         new_product = None
 
@@ -100,6 +98,13 @@ if food_list:
     new_products_df = None
     
     new_products_df, failed_scraps = start_scraping(food_list)
+
+    if failed_scraps:
+        message = _generate_message_failed(failed_scraps)
+        st.error(
+            f"The following scraps failed: \n{message}",
+            icon="🚨"
+        )
 
     # Attach to download button
     st.download_button(
