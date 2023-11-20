@@ -37,8 +37,11 @@ def start_scraping(hyperlink_df):
         print("\n\n\n")
 
     column_names = list(product_list[0].keys())
+
+    scraped_df = pd.DataFrame(product_list, columns=column_names)
+    scraped_df.fillna(0, inplace=True)
     
-    return pd.DataFrame(product_list, columns=column_names)
+    return scraped_df
 
 # Page configurations
 st.set_page_config(
