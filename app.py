@@ -102,7 +102,7 @@ if food_list:
     if failed_scraps:
         message = _generate_message_failed(failed_scraps)
         st.error(
-            f"The following scraps failed: \n{message}",
+            f"The following URLs scraping failed: \n{message}",
             icon="🚨"
         )
 
