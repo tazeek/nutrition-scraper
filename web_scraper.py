@@ -96,15 +96,15 @@ class NutriScraper:
 
         # Call the API too
         # The ID is the second-last before the product name
-        product_id = url.split("/")[-2]
-        new_url = f'https://www.woolworths.com.au/api/v3/ui/schemaorg/product/{product_id}'
-        response = requests.get(new_url, headers=self._header)
-        product_info_dict = json.loads(response.content)
+        #product_id = url.split("/")[-2]
+        #new_url = f'https://www.woolworths.com.au/api/v3/ui/schemaorg/product/{product_id}'
+        #response = requests.get(new_url, headers=self._header)
+        #product_info_dict = json.loads(response.content)
 
         # Get the price
-        nutrition_dict['Price'] = product_info_dict["offers"]["price"]
+        #nutrition_dict['Price'] = product_info_dict["offers"]["price"]
 
         # Respect the scraping etiquettes :)
-        self._polite_delay(20)
+        #self._polite_delay(20)
 
         return nutrition_dict
