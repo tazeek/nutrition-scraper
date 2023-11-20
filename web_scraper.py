@@ -92,7 +92,7 @@ class NutriScraper:
             nutrition_dict[f'{nutrition_label} per serving ({metric})'] = serving_quantity
             nutrition_dict[f'{nutrition_label} per 100g/100mL ({metric})'] = serving_per_100
 
-        self._polite_delay(25)
+        self._polite_delay(20)
 
         # Call the API too
         # The ID is the second-last before the product name
@@ -105,6 +105,6 @@ class NutriScraper:
         nutrition_dict['Price'] = product_info_dict["offers"]["price"]
 
         # Respect the scraping etiquettes :)
-        self._polite_delay(10)
+        self._polite_delay(20)
 
         return nutrition_dict
