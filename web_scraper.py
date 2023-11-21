@@ -55,11 +55,6 @@ class NutriScraper:
         servings_pack_value = self.get_value_html(servings_pack.get_text()) if servings_pack else 1
         nutrition_dict['Servings per pack'] = servings_pack_value
 
-        # Get the money
-        dollar_amount = page_soup.find("span", {"class": "price-dollars"})
-        cents_amount = page_soup.find("span", {"class": "price-cents"})
-        nutrition_dict['Price'] = f"{dollar_amount.get_text()}.{cents_amount.get_text()}"
-
         # Get the serving size, followed by the metrics
         serving_size = page_soup.find("div", {"*ngif": 'productServingSize'})
         serving_size = self.get_value_html(serving_size.get_text())
